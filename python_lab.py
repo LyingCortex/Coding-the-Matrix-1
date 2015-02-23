@@ -77,7 +77,7 @@ cartesian_product = [ [x, y] for x in ['A','B','C'] for y in [1,2,3] ]
 LofL = [[.25, .75, .1], [-1, 0], [4, 4, 4, 4]]
 # Replace ... with a one-line expression of the form sum([sum(...) ... ]) that
 # includes a comprehension and evaluates to the sum of all numbers in all the lists.
-LofL_sum = sum(sum(LofL,[]))
+LofL_sum = sum([sum(x) for x in LofL])
 
 
 
@@ -161,7 +161,7 @@ square_dict = { x:x*x for x in range(100) }
 ## 23: (Task 23) Making the identity function
 D = {'red','white','blue'}
 # Replace {...} with a one-line dictionary comprehension
-identity_dict = {...}
+identity_dict = {x:x for x in D}
 
 
 

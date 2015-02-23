@@ -20,8 +20,7 @@ def myFilter(L, num):
       >>> myFilter([10,15,20,25],10)
       [15, 25]
     '''
-    pass
-
+    return [ x for x in L if x%num != 0]
 
 
 ## 2: (Problem 2) Python Comprehensions: Lists of Lists
@@ -33,8 +32,7 @@ def my_lists(L):
     >>> my_lists([0,3])
     [[], [1, 2, 3]]
     '''
-    pass
-
+    return [ [x+1 for x in range(i)]  for i in L]
 
 
 ## 3: (Problem 3) Python Comprehensions: Function Composition
@@ -56,10 +54,17 @@ def myFunctionComposition(f, g):
       >>> myFunctionComposition(a,b) == {'x':'twentyfour','y':'twentyfive'}
       True
     '''
-    pass
-
-
-
+    #return { k1:v2 for k1 in f.keys() for v2 in g.values() if f.get(k1)==g.get  }
+    k1=list(f.keys())
+    v1=list(f.values())
+    k2=list(g.keys())
+    v2=list(g.values())
+    res={}
+    for i in range(len(f)):
+        for j in range(len(g)):
+            if v1[i]==k2[j]:
+                res[k1[i]]=v2[j]
+    return res
 ## 4: (Problem 4) Summing numbers in a list
 def mySum(L):
     '''
@@ -74,8 +79,10 @@ Be sure your procedure works for the empty list.
       >>> mySum([3,5,10])
       18
     '''
-    pass
-
+    current = 0
+    for x in L:
+        current = current + x
+    return current
 
 
 ## 5: (Problem 5) Multiplying numbers in a list
@@ -92,7 +99,10 @@ Be sure your procedure works for the empty list.
       >>> myProduct([-3,2,4])
       -24
     '''
-    pass
+    current = 1
+    for x in L:
+        current = current * x
+    return current
 
 
 
@@ -111,7 +121,11 @@ Hint: The value of the Python expression float('infinity') is infinity.
     >>> myMin([0,3,5,-2,-5])
     -5
     '''
-    pass
+    cur = L[0]
+    for i in range(1,len(L)):
+        if cur > L[i]:
+            cur = L[i]
+    return cur
 
 
 
@@ -129,8 +143,10 @@ Be sure your procedure works for the empty list.
     >>> myConcat(['what','is','up'])
     'whatisup'
     '''
-    pass
-
+    S=''
+    for x in L:
+        S = S + x
+    return S
 
 
 ## 8: (Problem 8) Union of Sets in a List
@@ -147,18 +163,19 @@ Be sure your procedure works for the empty list.
     >>> myUnion([set(),{3,5},{3,5}])
     {3, 5}
     '''
-    pass
-
+    U=set()
+    for x in L:
+        U = U | x
+    return U
 
 
 ## 9: (Problem 9) Complex Addition Practice
 # Each answer should be a Python expression whose value is a complex number.
 
-complex_addition_a = ...
-complex_addition_b = ...
-complex_addition_c = ...
-complex_addition_d = ...
-
+complex_addition_a = 5+3j
+complex_addition_b = 0+1j
+complex_addition_c = -1+0.001j
+complex_addition_d = 0.001+9j
 
 
 ## 10: (Problem 10) Combining Complex Operations
@@ -176,12 +193,11 @@ def transform(a, b, L):
     >>> transform(3,2,[1,2,3])
     [5, 8, 11]
     '''
-    pass
-
+    return [ a*z+b for z in L]
 
 
 ## 11: (Problem 11) GF(2) Arithmetic
-GF2_sum_1 = ... # answer with 0 or 1
-GF2_sum_2 = ...
-GF2_sum_3 = ...
+GF2_sum_1 = 1# answer with 0 or 1
+GF2_sum_2 = 0
+GF2_sum_3 = 0 
 
