@@ -19,7 +19,7 @@ class One:
     __rmul__ = __mul__
     #hack to ensure not (one < 1e-16) by ensuring not (one < x) for every x
     def __lt__(self,other): return False
-            
+
     def __str__(self): return 'one'
     __repr__ = __str__
     def __neg__(self): return self
