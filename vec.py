@@ -15,7 +15,7 @@ def getitem(v,k):
     >>> v['b']
     0
     """
-    return v.f[k] if k in v.f.keys() else 0 
+    return v.f[k] if k in v.f.keys() else 0
 def setitem(v,k,val):
     """
     Set the element of v with label d to be val.

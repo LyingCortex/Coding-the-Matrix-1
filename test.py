@@ -17,11 +17,11 @@ def vec_select(veclist, k):
     >>> vec_select([v1, v2, v3, v4], 'a') == [Vec(D,{'b': 1}), Vec(D,{'b': 2})]
     True
     '''
+    #return [ v for v in veclist if v[k]==0 ]
     V_L = [ v for v in veclist if v[k]==0]
     for v in V_L:
-        v.f = { x:y for (x,y) in v.f.items() if x!=k }
+        v.f = { x:y for (x,y) in v.f.items() if x!=k}
     return V_L
-
 def vec_sum(veclist, D):
     '''
     >>> D = {'a','b','c'}
@@ -35,7 +35,9 @@ def vec_sum(veclist, D):
     S=Vec(D,{})
     for v in veclist:
         S += v
+    #S.f={ x:y for (x,y) in S.f.items() if y!=0 }
     return S
+
 def vec_select_sum(veclist, k, D):
     '''
     >>> D = {'a','b','c'}
@@ -63,6 +65,7 @@ def scale_vecs(vecdict):
     #return [ Vec(v.D, { x:y/scale for (x,y) in v.f.items() }) for (scale, v) in vecdict.items() ]
     return [ 1/scale*v for (scale, v) in vecdict.items() ]
 
+
 ## 3: (Problem 3) Constructing span of given vectors over GF(2)
 def GF2_span(D, S):
     '''
@@ -78,30 +81,51 @@ def GF2_span(D, S):
     >>> S == {Vec({0, 1},{1: one}), Vec({0, 1},{0: one})}
     True
     '''
-
     pass
+
 
 
 ## 4: (Problem 4) Is it a vector space 1
 # Answer with a boolean, please.
-is_a_vector_space_1 = False
+is_a_vector_space_1 = ...
 
 
 
 ## 5: (Problem 5) Is it a vector space 2
 # Answer with a boolean, please.
-is_a_vector_space_2 = True
+is_a_vector_space_2 = ...
 
 
 
 ## 6: (Problem 6) Is it a vector space 3
 # Answer with a boolean, please.
-is_a_vector_space_3 = False 
+is_a_vector_space_3 = ...
 
 
 
 ## 7: (Problem 7) Is it a vector space 4
 # Answer with a boolean, please.
-is_a_vector_space_4a = True
-is_a_vector_space_4b = False
+is_a_vector_space_4a = ...
+is_a_vector_space_4b = ...
 
+D = {'a','b','c'}
+v1 = Vec(D, {'a': 0})
+v2 = Vec(D, {'a': 3, 'b': 0})
+v3 = Vec(D, {        'b': 2})
+v4 = Vec(D, {'a': 10, 'b': 10})
+print(vec_select([v1, v2, v3, v4], 'a'))
+print(vec_sum([v1, v2, v3, v4], D))
+print(vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11}))
+
+print(vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3}))
+result = scale_vecs({3: v1, 5: v2})
+print(result)
+v1 = Vec({1,2,4}, {2: 9})
+v2 = Vec({1,2,4}, {1: 1, 2: 2, 4: 8})
+result = scale_vecs({3: v1, 5: v2})
+print(result)
+print([v in [Vec({1,2,4},{2: 3.0}), Vec({1,2,4},{1: 0.2, 2: 0.4, 4: 1.6})] for v in result])
+v1 = Vec({1,2,4},{} )
+v2 = Vec({1,2,4},{}) 
+result = scale_vecs({3: v1, 5: v2})
+print(result)
