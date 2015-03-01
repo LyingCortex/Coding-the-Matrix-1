@@ -9,9 +9,9 @@ from vec import Vec
 
 ## 1: (Problem 4.17.1) Computing matrix-vector products
 # Please represent your solution vectors as lists.
-vector_matrix_product_1 = ...
-vector_matrix_product_2 = ...
-vector_matrix_product_3 = ...
+vector_matrix_product_1 = [1, 0] 
+vector_matrix_product_2 = [0, 4.44]
+vector_matrix_product_3 = [14, 20, 26]
 
 
 

@@ -3,7 +3,8 @@ coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
 from vec import Vec
-
+from itertools import *
+from GF2 import one
 
 
 ## 1: (Problem 1) Vector Comprehension and Sum
@@ -78,9 +79,10 @@ def GF2_span(D, S):
     >>> S == {Vec({0, 1},{1: one}), Vec({0, 1},{0: one})}
     True
     '''
-
-    pass
-
+    Span=set()
+    for Coef in list(product([0, one], repeat=len(S))):
+        Span.add(vec_sum([x[0]*x[1]  for x in zip(Coef, S)], D))
+    return Span
 
 ## 4: (Problem 4) Is it a vector space 1
 # Answer with a boolean, please.

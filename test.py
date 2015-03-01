@@ -3,8 +3,8 @@ coursera = 1
 # Please fill out this stencil and submit using the provided submission script.
 
 from vec import Vec
-
-
+from GF2 import one
+from itertools import *
 
 ## 1: (Problem 1) Vector Comprehension and Sum
 def vec_select(veclist, k):
@@ -81,8 +81,11 @@ def GF2_span(D, S):
     >>> S == {Vec({0, 1},{1: one}), Vec({0, 1},{0: one})}
     True
     '''
-    pass
-
+    Span =set()
+    for Coef in list(product([0, one], repeat=len(S))):
+        print([x for x in zip(Coef,S)])
+        Span.add(vec_sum([x[0]*x[1]  for x in zip(Coef, S)], D))
+    return Span
 
 
 ## 4: (Problem 4) Is it a vector space 1
@@ -129,3 +132,6 @@ v1 = Vec({1,2,4},{} )
 v2 = Vec({1,2,4},{}) 
 result = scale_vecs({3: v1, 5: v2})
 print(result)
+S={Vec({0,1},{0:one}), Vec({0,1},{1:one})}
+print(GF2_span({0,1}, S))
+
