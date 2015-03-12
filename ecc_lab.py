@@ -4,7 +4,7 @@ coursera = 1
 
 from vec import Vec
 from mat import Mat
-from bitutil import bits2mat, str2bits, noise
+from bitutil import bits2mat, str2bits, noise, mat2bits,bits2str ## NOTE: Add mat2bits and bits2str by myself
 from GF2 import one
 from  matutil import * 
 ## Task 1
@@ -42,15 +42,21 @@ def find_error(syndrome):
         >>> find_error(Vec({0,1,2}, {})) == Vec({0,1,2,3,4,5,6}, {})
         True
     """
-    pass
-
+    #return Vec({0,1,2,3,4,5,6},{}) if syndrome.f()=={} else Vec({0,1,2,3,4,5,6}, {sum[x]:one  
+    index = sum([2**(2-x) for x in syndrome.f.keys() if syndrome.f[x]==one])
+    if index==0:
+        return Vec({0,1,2,3,4,5,6},{}) 
+    else: 
+        return Vec({0,1,2,3,4,5,6},{index-1:one})  
 ## Task 6
 # Use the Vec class for your answers.
 non_codeword = Vec({0,1,2,3,4,5,6}, {0: one, 1:0, 2:one, 3:one, 4:0, 5:one, 6:one})
-error_vector = Vec(..., ...)
-code_word = Vec(..., ...)
-original = ... # R * code_word
-
+error_vector = find_error(H*non_codeword) 
+code_word = non_codeword+error_vector 
+original = R*code_word # R * code_word
+#print(error_vector)
+#print(code_word)
+#print(original)
 
 ## Task 7
 def find_error_matrix(S):
@@ -62,20 +68,23 @@ def find_error_matrix(S):
         >>> find_error_matrix(S) == Mat(({0, 1, 2, 3, 4, 5, 6}, {0, 1, 2, 3}), {(1, 3): 0, (3, 0): 0, (2, 1): 0, (6, 2): 0, (5, 1): one, (0, 3): 0, (4, 0): 0, (1, 2): 0, (3, 3): 0, (6, 3): 0, (5, 0): 0, (2, 2): 0, (4, 1): 0, (1, 1): 0, (3, 2): one, (0, 0): 0, (6, 0): 0, (2, 3): 0, (4, 2): 0, (1, 0): 0, (5, 3): 0, (0, 1): 0, (6, 1): 0, (3, 1): 0, (2, 0): 0, (4, 3): one, (5, 2): 0, (0, 2): 0})
         True
     """
-    pass
-
+    return coldict2mat({k: find_error(mat2coldict(S)[k]) for k in  mat2coldict(S).keys()}) 
+    
 ## Task 8
 s = "I'm trying to free your mind, Neo. But I can only show you the door. You're the one that has to walk through it."
-P = None
+P = bits2mat(str2bits(s)) 
 
 ## Task 9
-C = None
-bits_before = None
-bits_after = None
+C = G*P
+bits_before =len(str2bits(s)) 
+bits_after = len(mat2bits(C)) 
 
 
 ## Ungraded Task
-CTILDE = None
+CTILDE = C + noise(C, 0.02)
+#print(s)
+#print(bits2str(mat2bits(CTILDE)))
+
 
 ## Task 10
 def correct(A):
@@ -87,5 +96,6 @@ def correct(A):
         >>> correct(A) == Mat(({0, 1, 2, 3, 4, 5, 6}, {1, 2, 3}), {(0, 1): 0, (1, 2): 0, (3, 2): 0, (1, 3): 0, (3, 3): 0, (5, 2): one, (6, 1): 0, (3, 1): 0, (2, 1): 0, (0, 2): one, (6, 3): one, (4, 2): 0, (6, 2): one, (2, 3): 0, (4, 3): 0, (2, 2): 0, (5, 1): 0, (0, 3): one, (4, 1): 0, (1, 1): 0, (5, 3): one})
         True
     """
-    pass
+    return   A + find_error_matrix(H*A) 
 
+#print(bits2str(mat2bits(R*correct(CTILDE))))
