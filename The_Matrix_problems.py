@@ -160,11 +160,16 @@ def lin_comb_mat_vec_mult(M, v):
     return s
     '''
     assert(M.D[1] == v.D)
-    for row in M.D[0]: 
-        for col in M.D[1]:
-            if (row,col) not in M.f.keys(): 
-                M.f[(row,col)]=0 
-    return Vec(M.D[0], { x:sum([ v[j] * M.f[(x,j)] for j in M.D[1] ]) for x in M.D[0] })
+    #for row in M.D[0]: 
+    #    for col in M.D[1]:
+    #        if (row,col) not in M.f.keys(): 
+    #            M.f[(row,col)]=0 
+    #return Vec(M.D[0], { x:sum([ v[j] * M.f[(x,j)] for j in M.D[1] ]) for x in M.D[0] })
+    col_dict = mat2coldict(M)
+    result_vec = Vec(M.D[0],{})
+    for c in v.D:
+        result_vec = result_vec + v[c] * col_dict[c]
+    return result_vec
 ## 11: (Problem 4.17.14) Linear-combinations vector-matrix multiply
 def lin_comb_vec_mat_mult(v, M):
     '''
@@ -186,7 +191,12 @@ def lin_comb_vec_mat_mult(v, M):
       True
     '''
     assert(v.D == M.D[0])
-    return Vec(M.D[0], { x:sum([ v[j] * M.f[(x,j)] for j in M.D[1] ]) for x in M.D[0] })
+    #return Vec(M.D[0], { x:sum([ v[j] * M.f[(x,j)] for j in M.D[1] ]) for x in M.D[0] })
+    row_dict = mat2rowdict(M)
+    result_vec = Vec(M.D[1],{})
+    for c in v.D:
+        result_vec = result_vec + v[c] * row_dict[c]
+    return result_vec
 
 
 
@@ -209,8 +219,11 @@ def dot_product_mat_vec_mult(M, v):
     True
     '''
     assert(M.D[1] == v.D)
-    pass
-
+    res = Vec(M.D[0], {})
+    row_dict = mat2rowdict(M)
+    for r in M.D[0]:
+        res = row_dict[r] * v
+    return res
 
 
 ## 13: (Problem 4.17.16) Dot-product vector-matrix multiply
@@ -231,8 +244,11 @@ def dot_product_vec_mat_mult(v, M):
       True
       '''
     assert(v.D == M.D[0])
-    pass
-
+    res = Vec(M.D[1], {})
+    col_dict = mat2coldict(M)
+    for c in M.D[1]:
+        res = col_dict[c] * v
+    return res
 
 
 ## 14: (Problem 4.17.17) Matrix-vector matrix-matrix multiply
@@ -294,22 +310,22 @@ is_good2 = ...
 
 
 ## 17: (Problem 4.17.21) Solving 2x2 linear systems and finding matrix inverse
-solving_systems_x1 = ...
-solving_systems_x2 = ...
-solving_systems_y1 = ...
-solving_systems_y2 = ...
-solving_systems_m = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_a = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {...})
+solving_systems_x1 = -1/5.0 
+solving_systems_x2 = 2/5.0 
+solving_systems_y1 = 4/5 
+solving_systems_y2 = -3/5.0 
+solving_systems_m = Mat(({0, 1}, {0, 1}), {(0,0):-1/5.0, (1,0):2/5.0, (0,1): 4/5.0, (1,1):-3/5.0})
+solving_systems_a = Mat(({0, 1}, {0, 1}), {(0,0):3, (0,1):4, (1,0):2, (1,1):1})
+solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1,1):1})
+solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1,1):1})
 
 
 
 ## 18: (Problem 4.17.22) Matrix inverse criterion
 # Please write your solutions as booleans (True or False)
 
-are_inverses1 = ...
-are_inverses2 = ...
-are_inverses3 = ...
-are_inverses4 = ...
+are_inverses1 = True 
+are_inverses2 = True
+are_inverses3 = False
+are_inverses4 = False
 
