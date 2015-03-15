@@ -9,7 +9,7 @@ from matutil import *
 
 ## 1: (Problem 4.17.1) Computing matrix-vector products
 # Please represent your solution vectors as lists.
-vector_matrix_product_1 = [1, 0] 
+vector_matrix_product_1 = [1, 0]
 vector_matrix_product_2 = [0, 4.44]
 vector_matrix_product_3 = [14, 20, 26]
 
@@ -96,7 +96,7 @@ part_3_BA = [[3,4,0,-2],[1,-4,6,2],[2,0,1,5],[3,0,-4,2]]
 ## 8: (Problem 4.17.9) Matrix-matrix multiplication practice with very sparse matrices
 # Please represent your answer as a list of row lists.
 
-your_answer_a_AB = [[0,0,2,0],[0,0,5,0],[0,0,4,0],[0,0,6,0]] 
+your_answer_a_AB = [[0,0,2,0],[0,0,5,0],[0,0,4,0],[0,0,6,0]]
 your_answer_a_BA = [[0,0,0,0],[4,4,4,0],[0,0,0,0],[0,0,0,0]]
 
 your_answer_b_AB = [[0,2,-1,0],[0,5,3,0],[0,4,0,0],[0,6,-5,0]]
@@ -150,7 +150,7 @@ def lin_comb_mat_vec_mult(M, v):
     >>> lin_comb_mat_vec_mult(M1,v1) == Vec({'a', 'b'},{'a': 38, 'b': -5})
     True
     '''
-    ''' 
+    '''
     s=Vec(M.D[0],{})
     for j in v.D:
         tmp_vec={}
@@ -222,7 +222,7 @@ def dot_product_mat_vec_mult(M, v):
     res = Vec(M.D[0], {})
     row_dict = mat2rowdict(M)
     for r in M.D[0]:
-        res = row_dict[r] * v
+        res[r]= row_dict[r] * v
     return res
 
 
@@ -247,7 +247,7 @@ def dot_product_vec_mat_mult(v, M):
     res = Vec(M.D[1], {})
     col_dict = mat2coldict(M)
     for c in M.D[1]:
-        res = col_dict[c] * v
+        res[c] = col_dict[c] * v
     return res
 
 
@@ -255,15 +255,21 @@ def dot_product_vec_mat_mult(v, M):
 # You are also allowed to use the matutil module
 def Mv_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
-
+    col_dict = mat2coldict(B)
+    res=dict()
+    for c in col_dict.keys():
+        res[c]=A*col_dict[c]
+    return coldict2mat(res)
 
 
 ## 15: (Problem 4.17.18) Vector-matrix matrix-matrix multiply
 def vM_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
-
+    row_dict=mat2rowdict(A)
+    res=dict()
+    for r in row_dict.keys():
+        res[r]=row_dict[r]*B
+    return rowdict2mat(res)
 
 
 ## 16: () Buttons
@@ -310,10 +316,10 @@ is_good2 = ...
 
 
 ## 17: (Problem 4.17.21) Solving 2x2 linear systems and finding matrix inverse
-solving_systems_x1 = -1/5.0 
-solving_systems_x2 = 2/5.0 
-solving_systems_y1 = 4/5 
-solving_systems_y2 = -3/5.0 
+solving_systems_x1 = -1/5.0
+solving_systems_x2 = 2/5.0
+solving_systems_y1 = 4/5
+solving_systems_y2 = -3/5.0
 solving_systems_m = Mat(({0, 1}, {0, 1}), {(0,0):-1/5.0, (1,0):2/5.0, (0,1): 4/5.0, (1,1):-3/5.0})
 solving_systems_a = Mat(({0, 1}, {0, 1}), {(0,0):3, (0,1):4, (1,0):2, (1,1):1})
 solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1,1):1})
@@ -324,7 +330,7 @@ solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1
 ## 18: (Problem 4.17.22) Matrix inverse criterion
 # Please write your solutions as booleans (True or False)
 
-are_inverses1 = True 
+are_inverses1 = True
 are_inverses2 = True
 are_inverses3 = False
 are_inverses4 = False
